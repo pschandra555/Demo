@@ -80,8 +80,18 @@ def render(lines, path):
     small = ImageFont.truetype(FONT, 12)
     d.text((10, 6), 'SQL*Plus  |  rental@FREEPDB1  |  Oracle AI Database 26ai Free', font=small, fill=(210, 212, 216))
     y = bar + pad
+    rejected = False
     for l in wrapped:
-        color = (255, 120, 110) if re.match(r'^(ORA-|ERROR at)', l) else (204, 204, 204)
+        if l.startswith('Rejected:'):
+            rejected = True
+        elif not l.strip() or l.startswith('PL/SQL'):
+            rejected = False
+        if rejected:
+            color = (130, 210, 140)
+        elif re.match(r'^(ORA-|ERROR at|SP2-|Accepted - )', l):
+            color = (255, 120, 110)
+        else:
+            color = (204, 204, 204)
         d.text((pad, y), l, font=font, fill=color)
         y += lh
     img.save(path)
@@ -124,5 +134,13 @@ def main():
             save(f, transcript(chunk(*f['src'])))
 
 
+def rerender():
+    """Redraw every PNG from the saved transcripts (no database needed)."""
+    for f in FIGURES:
+        t = os.path.join(TXT, f"fig_{f['no']:02d}.txt")
+        if os.path.exists(t):
+            render(open(t).read().rstrip('\n').split('\n'), os.path.join(SHOTS, f"fig_{f['no']:02d}.png"))
+
+
 if __name__ == '__main__':
-    main()
+    rerender() if '--render-only' in sys.argv else main()

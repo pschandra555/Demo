@@ -520,9 +520,10 @@ def build_report(out_path):
              ['7', 'Set end_date one day before start_date', 'Table CHECK', 'ORA-02290 CK_BOOKING_DATES'],
              ['8', 'Set end_odometer below start_odometer (BR-08)', 'Table CHECK', 'ORA-02290 CK_BOOKING_ODOMETER']],
             [0.8, 7.6, 3.4, 5.2], size=8.5)
-    R.para('The ORA- messages (shown in red) in Figures ' + str(BY_KEY['ct1']['no']) + ' and ' + str(BY_KEY['ct2']['no']) +
-           ', and later in the trigger and business-rule tests, are expected results, not mistakes: each test is written '
-           'to break one rule, and the error proves that Oracle refused the bad data.', size=10)
+    R.para('Each test statement runs inside a small PL/SQL block (BEGIN ... EXCEPTION WHEN OTHERS ... END) that catches '
+           'the error and prints the first line of the error message. A line starting with **Rejected:** followed by the Oracle error means the '
+           'constraint worked and the bad data was refused. If a constraint were missing, the block would print '
+           '"Accepted - constraint NOT working" instead. The trigger and business-rule tests in Sections 5 and 6 use the same pattern.', size=10)
     R.figure('ct1')
     R.figure('ct2')
 

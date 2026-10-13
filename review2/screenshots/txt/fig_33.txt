@@ -7,7 +7,7 @@ SQL> SELECT customer_id, name, phone, license_no, registered_on FROM customer WH
 
 CUSTOMER_ID NAME               PHONE      LICENSE_NO      REGISTERED_ON
 ----------- ------------------ ---------- --------------- ---------------
-         13 Rohit Verma        9841000113 TN0920200045678 13-OCT-26 18:16
+         13 Rohit Verma        9841000113 TN0920200045678 13-OCT-26 18:23
 
 1 row selected.
 SQL>

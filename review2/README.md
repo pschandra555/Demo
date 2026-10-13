@@ -2,7 +2,7 @@
 
 | File | What it is |
 |---|---|
-| `Vehicle_Rental_Review2_Report.docx` / `.pdf` | Review II report (28 pages, 42 screenshots from a real Oracle run) |
+| `Vehicle_Rental_Review2_Report.docx` / `.pdf` | Review II report (29 pages, 42 screenshots from a real Oracle run) |
 | `Review2_Screenshot_Checklist.docx` / `.pdf` | Ordered list of every screenshot: what to run and what you should see |
 | `sql/00 … 11, 99` | Oracle scripts, run in number order (see Section 0 of the report) |
 | `screenshots/` | `fig_NN.png` screenshots used in the report; `txt/` holds the exact SQL*Plus output of each |
