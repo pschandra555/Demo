@@ -1,11 +1,11 @@
 SQL> SELECT customer_id, name, dob, fn_age(dob, SYSDATE) AS age_today
   2  FROM   customer WHERE customer_id IN (4, 8, 9);
 
-CUSTOMER_ID NAME               DOB                      AGE_TODAY
------------ ------------------ ------------------------ ---------
-          4 Sneha Pillai       18-JAN-01 00:00                 25
-          8 Divya Nair         25-JUN-02 00:00                 24
-          9 Sanjay Kulkarni    11-FEB-79 00:00                 47
+CUSTOMER_ID NAME               DOB             AGE_TODAY
+----------- ------------------ --------------- ---------
+          4 Sneha Pillai       18-JAN-01 00:00        25
+          8 Divya Nair         25-JUN-02 00:00        24
+          9 Sanjay Kulkarni    11-FEB-79 00:00        47
 
 3 rows selected.
 

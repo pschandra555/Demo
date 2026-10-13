@@ -424,7 +424,7 @@ def build_report(out_path):
            'constraints, functions, procedures and triggers.')
     R.table(['Rubric component', 'Section', 'What is implemented'],
             [['DDL & Constraints (2)', '1', '8 tables, 4 sequences; 8 PRIMARY KEY, 10 FOREIGN KEY, 10 UNIQUE, 23 CHECK, '
-              '34 NOT NULL constraints and 13 DEFAULT values. 8 constraint tests.'],
+              '34 NOT NULL constraints and 14 DEFAULT values. 8 constraint tests.'],
              ['DML & Data Population (1)', '2', '140 rows (10 to 45 per table). INSERT with DEFAULT, UPDATE, and '
               'DELETE with ON DELETE CASCADE.'],
              ['SQL Queries (2)', '3', '16 queries: inner/outer/self joins, GROUP BY, HAVING, nested and correlated '
@@ -502,7 +502,7 @@ def build_report(out_path):
               'Keeps values inside the business limits.'],
              ['NOT NULL', '34', 'Names, phones, dates and every foreign key on the "many" side', 'Total participation '
               'from the ER diagram: e.g. a vehicle cannot exist without a category and a branch.'],
-             ['DEFAULT', '13', "status 'AVAILABLE'/'BOOKED'/'SCHEDULED', transmission 'MANUAL', odometer 0, "
+             ['DEFAULT', '14', "status 'AVAILABLE'/'BOOKED'/'SCHEDULED', transmission 'MANUAL', odometer 0, "
               "late fee 100, deposit 2000, txn_status 'SUCCESS', cost 0, dates SYSDATE", 'Sensible value when a column is left out.']],
             [2.4, 1.3, 7.5, 5.8], size=8.5)
     R.para('Age \u2265 21 and licence validity depend on the current date. Oracle does not allow SYSDATE inside a CHECK '
@@ -520,6 +520,9 @@ def build_report(out_path):
              ['7', 'Set end_date one day before start_date', 'Table CHECK', 'ORA-02290 CK_BOOKING_DATES'],
              ['8', 'Set end_odometer below start_odometer (BR-08)', 'Table CHECK', 'ORA-02290 CK_BOOKING_ODOMETER']],
             [0.8, 7.6, 3.4, 5.2], size=8.5)
+    R.para('The ORA- messages (shown in red) in Figures ' + str(BY_KEY['ct1']['no']) + ' and ' + str(BY_KEY['ct2']['no']) +
+           ', and later in the trigger and business-rule tests, are expected results, not mistakes: each test is written '
+           'to break one rule, and the error proves that Oracle refused the bad data.', size=10)
     R.figure('ct1')
     R.figure('ct2')
 
@@ -742,7 +745,7 @@ def build_report(out_path):
     R.table(['Likely question', 'Short answer'],
             [['Why are age and licence checked by a trigger and not a CHECK constraint?',
               'They depend on today\'s date. Oracle does not allow SYSDATE in a CHECK constraint, so trg_customer_validate does it before every insert.'],
-             ['Procedure vs function in this project?', 'Functions return one value and are used in SQL (fn_calculate_rent in Q-style SELECTs). '
+             ['Procedure vs function in this project?', 'Functions return one value and can be used inside a SELECT (fn_calculate_rent in Figure ' + str(BY_KEY['funcs1']['no']) + '). '
               'Procedures do a full operation and change data (sp_return_vehicle updates BOOKING and inserts PAYMENT rows).'],
              ['Why use sequences?', 'They give unique IDs safely when many agents book at the same time. MAX(id)+1 could give the same ID to two sessions.'],
              ['Which cursors did you use?', 'An explicit cursor (OPEN, FETCH, CLOSE, %NOTFOUND, %ROWCOUNT) in sp_overdue_report and a cursor FOR loop in sp_pending_dues.'],

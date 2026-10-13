@@ -6,17 +6,17 @@ PL/SQL procedure successfully completed.
 
 SQL> SELECT booking_id, status, actual_return_date, start_odometer, end_odometer FROM booking WHERE booking_id = 23;
 
-BOOKING_ID STATUS     ACTUAL_RETURN_DATE       START_ODOMETER END_ODOMETER
----------- ---------- ------------------------ -------------- ------------
-        23 COMPLETED  16-OCT-26 13:00                    9060         9120
+BOOKING_ID STATUS      ACTUAL_RETURN_DATE START_ODOMETER END_ODOMETER
+---------- ----------- ------------------ -------------- ------------
+        23 COMPLETED   16-OCT-26 13:00              9060         9120
 
 1 row selected.
 
 SQL> SELECT vehicle_id, status, branch_id, odometer FROM vehicle WHERE vehicle_id = 12;
 
-VEHICLE_ID STATUS     BRANCH_ID  ODOMETER
----------- ---------- --------- ---------
-        12 AVAILABLE          2      9120
+VEHICLE_ID STATUS      BRANCH_ID  ODOMETER
+---------- ----------- --------- ---------
+        12 AVAILABLE           2      9120
 
 1 row selected.
 

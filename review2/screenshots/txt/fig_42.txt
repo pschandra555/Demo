@@ -1,10 +1,9 @@
 SQL> SELECT vehicle_id, reg_number, status FROM vehicle WHERE vehicle_id IN (3, 8);
 
 VEHICLE_ID REG_NUMBER STATUS
----------- ---------- ----------
+---------- ---------- -----------
          3 TN22CD2003 AVAILABLE
-         8 TN37NP7008 MAINTENANC
-                      E
+         8 TN37NP7008 MAINTENANCE
 
 2 rows selected.
 
@@ -25,10 +24,8 @@ Commit complete.
 SQL> SELECT vehicle_id, reg_number, status FROM vehicle WHERE vehicle_id IN (3, 8);
 
 VEHICLE_ID REG_NUMBER STATUS
----------- ---------- ----------
-         3 TN22CD2003 MAINTENANC
-                      E
-
+---------- ---------- -----------
+         3 TN22CD2003 MAINTENANCE
          8 TN37NP7008 AVAILABLE
 
 2 rows selected.

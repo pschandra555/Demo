@@ -22,7 +22,7 @@ COLUMN category_name   FORMAT A15
 COLUMN branch_name     FORMAT A31
 COLUMN pickup_branch   FORMAT A31
 COLUMN return_branch   FORMAT A31
-COLUMN status          FORMAT A10
+COLUMN status          FORMAT A11
 COLUMN state           FORMAT A11
 COLUMN details         FORMAT A48
 COLUMN transmission    FORMAT A12
@@ -41,3 +41,12 @@ COLUMN constraint_name FORMAT A22
 COLUMN delete_rule     FORMAT A11
 COLUMN fuel_type       FORMAT A9
 COLUMN refers_to       FORMAT A17
+COLUMN vehicle_status     FORMAT A14
+COLUMN start_date         FORMAT A15
+COLUMN end_date           FORMAT A15
+COLUMN actual_return_date FORMAT A18
+COLUMN cancelled_on       FORMAT A15
+COLUMN registered_on      FORMAT A15
+COLUMN license_expiry     FORMAT A15
+COLUMN dob                FORMAT A15
+COLUMN payment_date       FORMAT A15

@@ -7,9 +7,9 @@ PL/SQL procedure successfully completed.
 
 SQL> SELECT booking_id, customer_id, vehicle_id, start_date, end_date, status FROM booking WHERE booking_id = 23;
 
-BOOKING_ID CUSTOMER_ID VEHICLE_ID START_DATE               END_DATE                 STATUS
----------- ----------- ---------- ------------------------ ------------------------ ----------
-        23          13         12 14-OCT-26 10:00          16-OCT-26 10:00          BOOKED
+BOOKING_ID CUSTOMER_ID VEHICLE_ID START_DATE      END_DATE        STATUS
+---------- ----------- ---------- --------------- --------------- -----------
+        23          13         12 14-OCT-26 10:00 16-OCT-26 10:00 BOOKED
 
 1 row selected.
 

@@ -9,10 +9,10 @@ SQL> SELECT bk.booking_id, c.name AS customer, bk.start_date,
   9  GROUP  BY bk.booking_id, c.name, bk.start_date
  10  ORDER  BY bk.booking_id;
 
-BOOKING_ID CUSTOMER         START_DATE               CANCELLED_ON               ADVANCE    REFUND
----------- ---------------- ------------------------ ------------------------ --------- ---------
-        21 Rahul Menon      05-OCT-26 10:00          02-OCT-26 18:00               2000      2000
-        22 Anjali Thomas    09-OCT-26 08:00          09-OCT-26 03:00               1000       500
+BOOKING_ID CUSTOMER         START_DATE      CANCELLED_ON      ADVANCE    REFUND
+---------- ---------------- --------------- --------------- --------- ---------
+        21 Rahul Menon      05-OCT-26 10:00 02-OCT-26 18:00      2000      2000
+        22 Anjali Thomas    09-OCT-26 08:00 09-OCT-26 03:00      1000       500
 
 2 rows selected.
 SQL>

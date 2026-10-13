@@ -4,7 +4,7 @@ SQL> SELECT object_name, object_type, status
   4  ORDER  BY object_type, object_name;
 
 OBJECT_NAME                OBJECT_TYPE STATUS
--------------------------- ----------- ----------
+-------------------------- ----------- -----------
 FN_AGE                     FUNCTION    VALID
 FN_BOOKING_BALANCE         FUNCTION    VALID
 FN_CALCULATE_RENT          FUNCTION    VALID

@@ -9,7 +9,7 @@ SQL> SELECT bk.booking_id, c.name AS customer, v.reg_number,
   9  ORDER  BY bk.booking_id;
 
 BOOKING_ID CUSTOMER         REG_NUMBER PICKUP_BRANCH                   RETURN_BRANCH                   STATUS
----------- ---------------- ---------- ------------------------------- ------------------------------- ----------
+---------- ---------------- ---------- ------------------------------- ------------------------------- -----------
          2 Meera Krishnan   TN09AB1002 DriveEase Chennai Central       DriveEase Bengaluru MG Road     COMPLETED
         15 Vikram Reddy     KA01EF3004 DriveEase Bengaluru MG Road     DriveEase Chennai Central       COMPLETED
         16 Sneha Pillai     TS09JK5006 DriveEase Hyderabad Hitech City DriveEase Secunderabad          COMPLETED
