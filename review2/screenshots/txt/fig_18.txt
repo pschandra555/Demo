@@ -1,0 +1,19 @@
+SQL> SELECT *
+  2  FROM  (SELECT c.customer_id, c.name, COUNT(DISTINCT bk.booking_id) AS bookings,
+  3                SUM(p.amount) AS total_paid
+  4         FROM   customer c
+  5         JOIN   booking bk ON bk.customer_id = c.customer_id
+  6         JOIN   payment p  ON p.booking_id   = bk.booking_id
+  7         WHERE  p.txn_status = 'SUCCESS' AND p.payment_type <> 'REFUND'
+  8         GROUP  BY c.customer_id, c.name
+  9         ORDER  BY total_paid DESC)
+ 10  WHERE  ROWNUM <= 3;
+
+CUSTOMER_ID NAME                BOOKINGS TOTAL_PAID
+----------- ------------------ --------- ----------
+         11 Anjali Thomas              2      17500
+          5 Vikram Reddy               2      14900
+          7 Harish Kumar               1      13700
+
+3 rows selected.
+SQL>

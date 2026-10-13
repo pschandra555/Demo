@@ -1,0 +1,14 @@
+SQL> EXEC sp_pickup_vehicle(23);
+Booking 23 is now ONGOING. Start odometer: 9060
+
+PL/SQL procedure successfully completed.
+
+SQL> SELECT b.booking_id, b.status, b.start_odometer, v.vehicle_id, v.status AS vehicle_status
+  2  FROM   booking b JOIN vehicle v ON v.vehicle_id = b.vehicle_id WHERE b.booking_id = 23;
+
+BOOKING_ID STATUS     START_ODOMETER VEHICLE_ID VEHICLE_STAT
+---------- ---------- -------------- ---------- ------------
+        23 ONGOING              9060         12 RENTED
+
+1 row selected.
+SQL>

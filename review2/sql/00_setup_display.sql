@@ -19,9 +19,9 @@ COLUMN brand           FORMAT A13
 COLUMN model           FORMAT A13
 COLUMN vehicle         FORMAT A26
 COLUMN category_name   FORMAT A15
-COLUMN branch_name     FORMAT A30
-COLUMN pickup_branch   FORMAT A27
-COLUMN return_branch   FORMAT A27
+COLUMN branch_name     FORMAT A31
+COLUMN pickup_branch   FORMAT A31
+COLUMN return_branch   FORMAT A31
 COLUMN status          FORMAT A10
 COLUMN state           FORMAT A11
 COLUMN details         FORMAT A48

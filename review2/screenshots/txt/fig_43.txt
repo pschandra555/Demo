@@ -1,0 +1,50 @@
+SQL> -- 1. BR-02: vehicle 1 already has booking 19 from 20-Oct to 22-Oct
+SQL> EXEC sp_create_booking(10, 1, 2, 1, 1, TO_DATE('2026-10-21 10:00', 'YYYY-MM-DD HH24:MI'), TO_DATE('2026-10-23 10:00', 'YYYY-MM-DD HH24:MI'), 500, 'UPI');
+BEGIN sp_create_booking(10, 1, 2, 1, 1, TO_DATE('2026-10-21 10:00', 'YYYY-MM-DD HH24:MI'), TO_DATE('2026-10-23 10:00', 'YYYY-MM-DD HH24:MI'), 500, 'UPI'); END;
+
+*
+ERROR at line 1:
+ORA-20103: Vehicle 1 is already booked for these dates
+ORA-06512: at "RENTAL.SP_CREATE_BOOKING", line 21
+ORA-06512: at line 1
+
+SQL> -- 2. Vehicle 10 is at the Pune branch, not at Chennai Central
+SQL> EXEC sp_create_booking(10, 10, 2, 1, 1, TO_DATE('2026-11-02 10:00', 'YYYY-MM-DD HH24:MI'), TO_DATE('2026-11-03 10:00', 'YYYY-MM-DD HH24:MI'), 0);
+BEGIN sp_create_booking(10, 10, 2, 1, 1, TO_DATE('2026-11-02 10:00', 'YYYY-MM-DD HH24:MI'), TO_DATE('2026-11-03 10:00', 'YYYY-MM-DD HH24:MI'), 0); END;
+
+*
+ERROR at line 1:
+ORA-20102: Vehicle 10 is at branch 9, not at pickup branch 1
+ORA-06512: at "RENTAL.SP_CREATE_BOOKING", line 17
+ORA-06512: at line 1
+
+SQL> -- 3. Booking 23 is already COMPLETED, so it cannot be picked up again
+SQL> EXEC sp_pickup_vehicle(23);
+BEGIN sp_pickup_vehicle(23); END;
+
+*
+ERROR at line 1:
+ORA-20120: Booking 23 is COMPLETED, not BOOKED
+ORA-06512: at "RENTAL.SP_PICKUP_VEHICLE", line 12
+ORA-06512: at line 1
+
+SQL> -- 4. Booking 18 is ONGOING, so it cannot be cancelled
+SQL> EXEC sp_cancel_booking(18);
+BEGIN sp_cancel_booking(18); END;
+
+*
+ERROR at line 1:
+ORA-20140: Only a BOOKED booking can be cancelled. Current status: ONGOING
+ORA-06512: at "RENTAL.SP_CANCEL_BOOKING", line 13
+ORA-06512: at line 1
+
+SQL> -- 5. Phone number already belongs to customer 1
+SQL> EXEC sp_register_customer('Aditya R', '9841000101', NULL, 'TN0920259999999', DATE '2036-01-01', DATE '1996-03-14');
+BEGIN sp_register_customer('Aditya R', '9841000101', NULL, 'TN0920259999999', DATE '2036-01-01', DATE '1996-03-14'); END;
+
+*
+ERROR at line 1:
+ORA-20150: Phone, email or licence number is already registered
+ORA-06512: at "RENTAL.SP_REGISTER_CUSTOMER", line 19
+ORA-06512: at line 1
+SQL>

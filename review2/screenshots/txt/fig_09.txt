@@ -1,0 +1,25 @@
+SQL> SELECT vehicle_id, reg_number, brand, model, fuel_type, odometer, status, category_id, branch_id
+  2  FROM   vehicle
+  3  ORDER  BY vehicle_id;
+
+VEHICLE_ID REG_NUMBER BRAND         MODEL         FUEL_TYPE  ODOMETER STATUS     CATEGORY_ID BRANCH_ID
+---------- ---------- ------------- ------------- --------- --------- ---------- ----------- ---------
+         1 TN09AB1001 Maruti Suzuki Swift         PETROL        28530 AVAILABLE            1         1
+         2 TN09AB1002 Hyundai       Creta         DIESEL        15350 RENTED               3         3
+         3 TN22CD2003 Toyota        Innova Crysta DIESEL        42780 AVAILABLE            5         2
+         4 KA01EF3004 Honda         City          PETROL        18560 AVAILABLE            2         1
+         5 KA03GH4005 Tata          Nexon EV      ELECTRIC       6290 RENTED               7         4
+         6 TS09JK5006 Toyota        Fortuner      DIESEL        31660 AVAILABLE            4         6
+         7 TS10LM6007 Hyundai       i20           PETROL        52140 AVAILABLE            1         6
+         8 TN37NP7008 Maruti Suzuki Dzire         CNG           24190 MAINTENANC           2         7
+                                                                      E
+
+         9 TN23QR8009 Mahindra      XUV700        DIESEL        12400 AVAILABLE            4         8
+        10 MH12ST9010 Mercedes-Benz E-Class       PETROL         8260 AVAILABLE            6         9
+        11 KL07UV1011 Force         Traveller     DIESEL        61620 AVAILABLE            8        10
+        12 TN09WX1012 Honda         Activa 6G     PETROL         9060 AVAILABLE            9         1
+        13 KA01YZ1013 Royal Enfield Classic 350   PETROL        14180 AVAILABLE           10         3
+        14 TN07AA0014 Tata          Indica        DIESEL       189000 RETIRED              1         2
+
+14 rows selected.
+SQL>

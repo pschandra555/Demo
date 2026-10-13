@@ -1,0 +1,26 @@
+SQL> SELECT vc.category_name,
+  2         COUNT(DISTINCT v.vehicle_id)                     AS vehicles,
+  3         COUNT(bk.booking_id)                             AS rentals,
+  4         ROUND(AVG(bk.end_date - bk.start_date), 1)       AS avg_days,
+  5         ROUND(AVG(bk.end_odometer - bk.start_odometer))  AS avg_km
+  6  FROM   vehicle_category vc
+  7  LEFT JOIN vehicle v  ON v.category_id = vc.category_id
+  8  LEFT JOIN booking bk ON bk.vehicle_id = v.vehicle_id AND bk.status = 'COMPLETED'
+  9  GROUP  BY vc.category_name
+ 10  ORDER  BY rentals DESC, vc.category_name;
+
+CATEGORY_NAME    VEHICLES   RENTALS  AVG_DAYS    AVG_KM
+--------------- --------- --------- --------- ---------
+Hatchback               3         3       1.3       223
+SUV                     2         3       2.7       353
+Sedan                   2         3         2       250
+Compact SUV             1         1         3       350
+Electric Car            1         1         3       290
+Luxury Sedan            1         1         2       260
+MUV                     1         1         4       780
+Motorbike               1         1         2       180
+Scooter                 1         1         1        60
+Tempo Traveller         1         1         3       620
+
+10 rows selected.
+SQL>

@@ -1,0 +1,23 @@
+SQL> SELECT constraint_kind, COUNT(*) AS total
+  2  FROM  (SELECT CASE constraint_type
+  3                  WHEN 'P' THEN 'PRIMARY KEY'
+  4                  WHEN 'R' THEN 'FOREIGN KEY'
+  5                  WHEN 'U' THEN 'UNIQUE'
+  6                  WHEN 'C' THEN CASE WHEN constraint_name LIKE 'SYS%' THEN 'NOT NULL' ELSE 'CHECK' END
+  7                END AS constraint_kind
+  8         FROM   user_constraints
+  9         WHERE  table_name IN ('BRANCH', 'VEHICLE_CATEGORY', 'VEHICLE', 'CUSTOMER',
+ 10                               'EMPLOYEE', 'BOOKING', 'PAYMENT', 'MAINTENANCE'))
+ 11  GROUP  BY constraint_kind
+ 12  ORDER  BY total DESC;
+
+CONSTRAINT_KIND     TOTAL
+--------------- ---------
+NOT NULL               34
+CHECK                  23
+UNIQUE                 10
+FOREIGN KEY            10
+PRIMARY KEY             8
+
+5 rows selected.
+SQL>

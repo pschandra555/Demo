@@ -1,0 +1,26 @@
+SQL> SELECT b.branch_name,
+  2         COUNT(v.vehicle_id)                                     AS fleet,
+  3         SUM(CASE WHEN v.status = 'AVAILABLE'   THEN 1 ELSE 0 END) AS available,
+  4         SUM(CASE WHEN v.status = 'RENTED'      THEN 1 ELSE 0 END) AS rented,
+  5         SUM(CASE WHEN v.status = 'MAINTENANCE' THEN 1 ELSE 0 END) AS in_maint,
+  6         SUM(CASE WHEN v.status = 'RETIRED'     THEN 1 ELSE 0 END) AS retired
+  7  FROM   branch b
+  8  LEFT JOIN vehicle v ON v.branch_id = b.branch_id
+  9  GROUP  BY b.branch_id, b.branch_name
+ 10  ORDER  BY b.branch_id;
+
+BRANCH_NAME                         FLEET AVAILABLE    RENTED  IN_MAINT   RETIRED
+------------------------------- --------- --------- --------- --------- ---------
+DriveEase Chennai Central               3         3         0         0         0
+DriveEase Chennai Airport               2         1         0         0         1
+DriveEase Bengaluru MG Road             2         1         1         0         0
+DriveEase Bengaluru Whitefield          1         0         1         0         0
+DriveEase Hyderabad Hitech City         0         0         0         0         0
+DriveEase Secunderabad                  2         2         0         0         0
+DriveEase Coimbatore                    1         0         0         1         0
+DriveEase Vellore Katpadi               1         1         0         0         0
+DriveEase Pune Shivajinagar             1         1         0         0         0
+DriveEase Kochi Edappally               1         1         0         0         0
+
+10 rows selected.
+SQL>

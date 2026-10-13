@@ -1,0 +1,23 @@
+SQL> -- Both registrations must be rejected by trg_customer_validate
+SQL> EXEC sp_register_customer('Arav Shah', '9000000001', NULL, 'TN0920250000001', DATE '2035-01-01', DATE '2010-01-01');
+BEGIN sp_register_customer('Arav Shah', '9000000001', NULL, 'TN0920250000001', DATE '2035-01-01', DATE '2010-01-01'); END;
+
+*
+ERROR at line 1:
+ORA-20201: Customer must be at least 21 years old. Age: 16
+ORA-06512: at "RENTAL.TRG_CUSTOMER_VALIDATE", line 3
+ORA-04088: error during execution of trigger 'RENTAL.TRG_CUSTOMER_VALIDATE'
+ORA-06512: at "RENTAL.SP_REGISTER_CUSTOMER", line 13
+ORA-06512: at line 1
+
+SQL> EXEC sp_register_customer('Nikhil Das', '9000000002', NULL, 'TN0920000000002', DATE '2025-01-01', DATE '1990-01-01');
+BEGIN sp_register_customer('Nikhil Das', '9000000002', NULL, 'TN0920000000002', DATE '2025-01-01', DATE '1990-01-01'); END;
+
+*
+ERROR at line 1:
+ORA-20202: Driving licence has expired on 01-JAN-2025
+ORA-06512: at "RENTAL.TRG_CUSTOMER_VALIDATE", line 7
+ORA-04088: error during execution of trigger 'RENTAL.TRG_CUSTOMER_VALIDATE'
+ORA-06512: at "RENTAL.SP_REGISTER_CUSTOMER", line 13
+ORA-06512: at line 1
+SQL>

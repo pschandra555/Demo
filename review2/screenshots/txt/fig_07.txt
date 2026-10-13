@@ -1,0 +1,36 @@
+SQL> -- 5. FOREIGN KEY (child side): booking 999 does not exist
+SQL> INSERT INTO payment VALUES (500, 999, 1000, SYSDATE, 'CASH', 'ADVANCE', 'SUCCESS');
+INSERT INTO payment VALUES (500, 999, 1000, SYSDATE, 'CASH', 'ADVANCE', 'SUCCESS')
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (RENTAL.FK_PAYMENT_BOOKING) violated - parent key not found
+Help: https://docs.oracle.com/error-help/db/ora-02291/
+
+SQL> -- 6. FOREIGN KEY (parent side): customer 1 still has bookings
+SQL> DELETE FROM customer WHERE customer_id = 1;
+DELETE FROM customer WHERE customer_id = 1
+*
+ERROR at line 1:
+ORA-02292: integrity constraint (RENTAL.FK_BOOKING_CUSTOMER) violated - child record found
+Help: https://docs.oracle.com/error-help/db/ora-02292/
+
+SQL> -- 7. Table-level CHECK: end date before start date
+SQL> UPDATE booking SET end_date = start_date - 1 WHERE booking_id = 1;
+UPDATE booking SET end_date = start_date - 1 WHERE booking_id = 1
+*
+ERROR at line 1:
+ORA-02290: check constraint (RENTAL.CK_BOOKING_DATES) violated
+Help: https://docs.oracle.com/error-help/db/ora-02290/
+
+SQL> -- 8. Table-level CHECK (BR-08): end odometer lower than start odometer
+SQL> UPDATE booking SET end_odometer = 100 WHERE booking_id = 1;
+UPDATE booking SET end_odometer = 100 WHERE booking_id = 1
+*
+ERROR at line 1:
+ORA-02290: check constraint (RENTAL.CK_BOOKING_ODOMETER) violated
+Help: https://docs.oracle.com/error-help/db/ora-02290/
+
+SQL> ROLLBACK;
+
+Rollback complete.
+SQL>

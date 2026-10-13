@@ -1,0 +1,20 @@
+SQL> SELECT booking_id, end_date, actual_return_date,
+  2         fn_rental_days(start_date, end_date) AS days,
+  3         fn_calculate_rent(booking_id)        AS rent,
+  4         fn_late_fee(booking_id)              AS late_fee,
+  5         fn_booking_balance(booking_id)       AS balance
+  6  FROM   booking
+  7  WHERE  booking_id IN (1, 2, 4, 7, 12, 16)
+  8  ORDER  BY booking_id;
+
+BOOKING_ID END_DATE                 ACTUAL_RETURN_DATE            DAYS      RENT  LATE_FEE   BALANCE
+---------- ------------------------ ------------------------ --------- --------- --------- ---------
+         1 04-AUG-26 09:00          04-AUG-26 08:30                  2      3000         0         0
+         2 08-AUG-26 10:00          08-AUG-26 14:00                  3      8400      1000         0
+         4 17-AUG-26 09:00          17-AUG-26 09:40                  3      9000       250         0
+         7 05-SEP-26 07:00          05-SEP-26 10:00                  4     12800       900         0
+        12 21-SEP-26 10:00          21-SEP-26 13:00                  3     10500       900       900
+        16 04-OCT-26 10:00          04-OCT-26 12:00                  2      7000       600      4000
+
+6 rows selected.
+SQL>

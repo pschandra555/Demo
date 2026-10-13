@@ -1,0 +1,24 @@
+SQL> -- Customer 4's licence expires on 30-APR-2027, before this rental ends
+SQL> EXEC sp_create_booking(4, 1, 2, 1, 1, TO_DATE('2027-05-01 10:00', 'YYYY-MM-DD HH24:MI'), TO_DATE('2027-05-03 10:00', 'YYYY-MM-DD HH24:MI'), 1000, 'UPI');
+BEGIN sp_create_booking(4, 1, 2, 1, 1, TO_DATE('2027-05-01 10:00', 'YYYY-MM-DD HH24:MI'), TO_DATE('2027-05-03 10:00', 'YYYY-MM-DD HH24:MI'), 1000, 'UPI'); END;
+
+*
+ERROR at line 1:
+ORA-20212: Driving licence expires on 30-APR-2027, before the rental ends
+ORA-06512: at "RENTAL.TRG_BOOKING_VALIDATE", line 12
+ORA-04088: error during execution of trigger 'RENTAL.TRG_BOOKING_VALIDATE'
+ORA-06512: at "RENTAL.SP_CREATE_BOOKING", line 25
+ORA-06512: at line 1
+
+SQL> -- Vehicle 5 is RENTED (booking 17 is still ongoing)
+SQL> EXEC sp_create_booking(1, 5, 6, 4, 4, TRUNC(SYSDATE) + 20 + 9/24, TRUNC(SYSDATE) + 22 + 9/24, 0);
+BEGIN sp_create_booking(1, 5, 6, 4, 4, TRUNC(SYSDATE) + 20 + 9/24, TRUNC(SYSDATE) + 22 + 9/24, 0); END;
+
+*
+ERROR at line 1:
+ORA-20213: Vehicle 5 cannot be booked. Status: RENTED
+ORA-06512: at "RENTAL.TRG_BOOKING_VALIDATE", line 18
+ORA-04088: error during execution of trigger 'RENTAL.TRG_BOOKING_VALIDATE'
+ORA-06512: at "RENTAL.SP_CREATE_BOOKING", line 25
+ORA-06512: at line 1
+SQL>

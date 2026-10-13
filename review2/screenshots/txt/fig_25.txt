@@ -1,0 +1,18 @@
+SQL> SELECT bk.booking_id, c.name AS customer, bk.start_date,
+  2         MAX(CASE WHEN p.payment_type = 'REFUND' THEN p.payment_date END) AS cancelled_on,
+  3         SUM(CASE WHEN p.payment_type = 'ADVANCE' THEN p.amount ELSE 0 END) AS advance,
+  4         SUM(CASE WHEN p.payment_type = 'REFUND'  THEN p.amount ELSE 0 END) AS refund
+  5  FROM   booking bk
+  6  JOIN   customer c ON c.customer_id = bk.customer_id
+  7  LEFT JOIN payment p ON p.booking_id = bk.booking_id
+  8  WHERE  bk.status = 'CANCELLED'
+  9  GROUP  BY bk.booking_id, c.name, bk.start_date
+ 10  ORDER  BY bk.booking_id;
+
+BOOKING_ID CUSTOMER         START_DATE               CANCELLED_ON               ADVANCE    REFUND
+---------- ---------------- ------------------------ ------------------------ --------- ---------
+        21 Rahul Menon      05-OCT-26 10:00          02-OCT-26 18:00               2000      2000
+        22 Anjali Thomas    09-OCT-26 08:00          09-OCT-26 03:00               1000       500
+
+2 rows selected.
+SQL>

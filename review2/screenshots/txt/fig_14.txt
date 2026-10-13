@@ -1,0 +1,21 @@
+SQL> SELECT v.vehicle_id, v.reg_number, v.brand, v.model, vc.category_name, vc.daily_rate, b.branch_name
+  2  FROM   vehicle v
+  3  JOIN   vehicle_category vc ON vc.category_id = v.category_id
+  4  JOIN   branch b            ON b.branch_id    = v.branch_id
+  5  WHERE  b.city   = 'Chennai'
+  6  AND    v.status = 'AVAILABLE'
+  7  AND    NOT EXISTS (SELECT 1 FROM booking bk
+  8                     WHERE  bk.vehicle_id = v.vehicle_id
+  9                     AND    bk.status IN ('BOOKED', 'ONGOING')
+ 10                     AND    bk.start_date < TO_DATE('2026-10-23 10:00', 'YYYY-MM-DD HH24:MI')
+ 11                     AND    bk.end_date   > TO_DATE('2026-10-21 10:00', 'YYYY-MM-DD HH24:MI'))
+ 12  ORDER  BY vc.daily_rate;
+
+VEHICLE_ID REG_NUMBER BRAND         MODEL         CATEGORY_NAME   DAILY_RATE BRANCH_NAME
+---------- ---------- ------------- ------------- --------------- ---------- -------------------------------
+        12 TN09WX1012 Honda         Activa 6G     Scooter                500 DriveEase Chennai Central
+         4 KA01EF3004 Honda         City          Sedan                 2200 DriveEase Chennai Central
+         3 TN22CD2003 Toyota        Innova Crysta MUV                   3200 DriveEase Chennai Airport
+
+3 rows selected.
+SQL>

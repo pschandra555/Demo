@@ -1,0 +1,13 @@
+SQL> SELECT customer_id, name, phone, license_no, license_expiry,
+  2         TRUNC(license_expiry - SYSDATE) AS days_left
+  3  FROM   customer
+  4  WHERE  license_expiry BETWEEN SYSDATE AND ADD_MONTHS(SYSDATE, 12)
+  5  ORDER  BY license_expiry;
+
+CUSTOMER_ID NAME               PHONE      LICENSE_NO      LICENSE_EXPIRY           DAYS_LEFT
+----------- ------------------ ---------- --------------- ------------------------ ---------
+          4 Sneha Pillai       9841000104 KA0320190011223 30-APR-27 00:00                198
+          8 Divya Nair         9841000108 TN3720210055667 31-AUG-27 00:00                321
+
+2 rows selected.
+SQL>

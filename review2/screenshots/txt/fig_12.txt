@@ -1,0 +1,40 @@
+SQL> -- 10% increment for the agents of branches 1 and 3 (the busiest branches in Q15)
+SQL> SELECT emp_id, name, branch_id, salary FROM employee WHERE role = 'AGENT' AND branch_id IN (1, 3);
+
+   EMP_ID NAME               BRANCH_ID    SALARY
+--------- ------------------ --------- ---------
+        2 Divya Menon                1     32000
+        5 Pooja Rao                  3     31000
+
+2 rows selected.
+
+SQL> UPDATE employee SET salary = salary * 1.10 WHERE role = 'AGENT' AND branch_id IN (1, 3);
+
+2 rows updated.
+
+SQL> SELECT emp_id, name, branch_id, salary FROM employee WHERE role = 'AGENT' AND branch_id IN (1, 3);
+
+   EMP_ID NAME               BRANCH_ID    SALARY
+--------- ------------------ --------- ---------
+        2 Divya Menon                1     35200
+        5 Pooja Rao                  3     34100
+
+2 rows selected.
+
+SQL> -- Customer 7 changed phone number and address
+SQL> UPDATE customer SET phone = '9841999107', address = 'Chromepet, Chennai' WHERE customer_id = 7;
+
+1 row updated.
+
+SQL> SELECT customer_id, name, phone, address FROM customer WHERE customer_id = 7;
+
+CUSTOMER_ID NAME               PHONE      ADDRESS
+----------- ------------------ ---------- --------------------
+          7 Harish Kumar       9841999107 Chromepet, Chennai
+
+1 row selected.
+
+SQL> COMMIT;
+
+Commit complete.
+SQL>

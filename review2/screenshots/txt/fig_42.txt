@@ -1,0 +1,57 @@
+SQL> SELECT vehicle_id, reg_number, status FROM vehicle WHERE vehicle_id IN (3, 8);
+
+VEHICLE_ID REG_NUMBER STATUS
+---------- ---------- ----------
+         3 TN22CD2003 AVAILABLE
+         8 TN37NP7008 MAINTENANC
+                      E
+
+2 rows selected.
+
+SQL> -- Clutch job on vehicle 8 is finished; a new tyre job starts on vehicle 3
+SQL> UPDATE maintenance SET maint_status = 'DONE', cost = 9800 WHERE maint_id = 11;
+
+1 row updated.
+
+SQL> INSERT INTO maintenance (maint_id, vehicle_id, service_type, description, maint_status)
+  2  VALUES (seq_maintenance.NEXTVAL, 3, 'TYRE', 'Wheel alignment and tyre rotation', 'IN_PROGRESS');
+
+1 row created.
+
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> SELECT vehicle_id, reg_number, status FROM vehicle WHERE vehicle_id IN (3, 8);
+
+VEHICLE_ID REG_NUMBER STATUS
+---------- ---------- ----------
+         3 TN22CD2003 MAINTENANC
+                      E
+
+         8 TN37NP7008 AVAILABLE
+
+2 rows selected.
+
+SQL> -- Vehicle 3 is now in the workshop, so it cannot be booked
+SQL> EXEC sp_create_booking(13, 3, 3, 2, 2, TRUNC(SYSDATE) + 5 + 10/24, TRUNC(SYSDATE) + 6 + 10/24, 0);
+BEGIN sp_create_booking(13, 3, 3, 2, 2, TRUNC(SYSDATE) + 5 + 10/24, TRUNC(SYSDATE) + 6 + 10/24, 0); END;
+
+*
+ERROR at line 1:
+ORA-20213: Vehicle 3 cannot be booked. Status: MAINTENANCE
+ORA-06512: at "RENTAL.TRG_BOOKING_VALIDATE", line 18
+ORA-04088: error during execution of trigger 'RENTAL.TRG_BOOKING_VALIDATE'
+ORA-06512: at "RENTAL.SP_CREATE_BOOKING", line 25
+ORA-06512: at line 1
+
+SQL> -- Vehicle 2 is out on rent, so maintenance cannot start
+SQL> INSERT INTO maintenance (maint_id, vehicle_id, service_type, description, maint_status)
+  2  VALUES (seq_maintenance.NEXTVAL, 2, 'GENERAL', 'Periodic service', 'IN_PROGRESS');
+VALUES (seq_maintenance.NEXTVAL, 2, 'GENERAL', 'Periodic service', 'IN_PROGRESS')
+        *
+ERROR at line 2:
+ORA-20221: Vehicle 2 is out on rent; maintenance cannot start
+ORA-06512: at "RENTAL.TRG_MAINTENANCE_SYNC", line 7
+ORA-04088: error during execution of trigger 'RENTAL.TRG_MAINTENANCE_SYNC'
+SQL>

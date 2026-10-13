@@ -1,0 +1,17 @@
+SQL> SELECT p.payment_id, p.booking_id, c.name AS customer, v.reg_number,
+  2         p.payment_type, p.amount, p.txn_status
+  3  FROM   payment p
+  4  JOIN   booking  bk ON bk.booking_id = p.booking_id
+  5  JOIN   customer c  ON c.customer_id = bk.customer_id
+  6  JOIN   vehicle  v  ON v.vehicle_id  = bk.vehicle_id
+  7  WHERE  p.txn_status IN ('PENDING', 'FAILED')
+  8  ORDER  BY p.payment_id;
+
+PAYMENT_ID BOOKING_ID CUSTOMER         REG_NUMBER PAYMENT_TYPE    AMOUNT TXN_STATUS
+---------- ---------- ---------------- ---------- ------------ --------- ----------
+        30         12 Farhan Ali       TN23QR8009 LATE_FEE           900 PENDING
+        38         16 Sneha Pillai     TS09JK5006 FINAL             4000 FAILED
+        45         20 Harish Kumar     MH12ST9010 ADVANCE           4000 PENDING
+
+3 rows selected.
+SQL>

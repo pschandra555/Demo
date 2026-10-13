@@ -1,0 +1,32 @@
+SQL> -- Booking 24 starts in 10 days (full refund); booking 25 starts in 5 hours (50% refund).
+SQL> EXEC sp_create_booking(13, 13, 5, 3, 3, TRUNC(SYSDATE) + 10 + 9/24, TRUNC(SYSDATE) + 11 + 9/24, 400, 'CARD');
+Booking 24 created for vehicle 13. Estimated rent: Rs 800, advance paid: Rs 400
+
+PL/SQL procedure successfully completed.
+
+SQL> EXEC sp_cancel_booking(24);
+Booking 24 cancelled. Advance: Rs 400, refund: Rs 400
+
+PL/SQL procedure successfully completed.
+
+SQL> EXEC sp_create_booking(13, 13, 5, 3, 3, SYSDATE + 5/24, SYSDATE + 1 + 5/24, 400, 'CARD');
+Booking 25 created for vehicle 13. Estimated rent: Rs 800, advance paid: Rs 400
+
+PL/SQL procedure successfully completed.
+
+SQL> EXEC sp_cancel_booking(25);
+Booking 25 cancelled. Advance: Rs 400, refund: Rs 200
+
+PL/SQL procedure successfully completed.
+
+SQL> SELECT booking_id, payment_type, amount, method FROM payment WHERE booking_id IN (24, 25) ORDER BY payment_id;
+
+BOOKING_ID PAYMENT_TYPE    AMOUNT METHOD
+---------- ------------ --------- ----------
+        24 ADVANCE            400 CARD
+        24 REFUND             400 CARD
+        25 ADVANCE            400 CARD
+        25 REFUND             200 CARD
+
+4 rows selected.
+SQL>

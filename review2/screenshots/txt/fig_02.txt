@@ -1,0 +1,30 @@
+SQL> @00_setup_display.sql
+Session altered.
+
+SQL> @01_ddl.sql
+
+Sequence created.
+
+Sequence created.
+
+Sequence created.
+
+Sequence created.
+
+Table created.
+
+Table created.
+
+Table created.
+
+Table created.
+
+Table created.
+
+Table created.
+
+Table created.
+
+Table created.
+
+SQL> 

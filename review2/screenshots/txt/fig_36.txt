@@ -1,0 +1,32 @@
+SQL> -- Returned at Chennai Airport after driving 60 km, 3 hours after the end time.
+SQL> EXEC sp_return_vehicle(23, 9120, TRUNC(SYSDATE) + 3 + 13/24, 'CASH');
+Booking 23 completed. Rent: Rs 1000, advance: Rs 400, final payment: Rs 600, late fee: Rs 150
+
+PL/SQL procedure successfully completed.
+
+SQL> SELECT booking_id, status, actual_return_date, start_odometer, end_odometer FROM booking WHERE booking_id = 23;
+
+BOOKING_ID STATUS     ACTUAL_RETURN_DATE       START_ODOMETER END_ODOMETER
+---------- ---------- ------------------------ -------------- ------------
+        23 COMPLETED  16-OCT-26 13:00                    9060         9120
+
+1 row selected.
+
+SQL> SELECT vehicle_id, status, branch_id, odometer FROM vehicle WHERE vehicle_id = 12;
+
+VEHICLE_ID STATUS     BRANCH_ID  ODOMETER
+---------- ---------- --------- ---------
+        12 AVAILABLE          2      9120
+
+1 row selected.
+
+SQL> SELECT payment_id, payment_type, amount, method FROM payment WHERE booking_id = 23 ORDER BY payment_id;
+
+PAYMENT_ID PAYMENT_TYPE    AMOUNT METHOD
+---------- ------------ --------- ----------
+        46 ADVANCE            400 UPI
+        47 FINAL              600 CASH
+        48 LATE_FEE           150 CASH
+
+3 rows selected.
+SQL>

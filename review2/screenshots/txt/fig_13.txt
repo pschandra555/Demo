@@ -1,0 +1,26 @@
+SQL> -- Booking 22 was cancelled. Deleting it also deletes its payments (ON DELETE CASCADE).
+SQL> SELECT payment_id, booking_id, payment_type, amount FROM payment WHERE booking_id = 22;
+
+PAYMENT_ID BOOKING_ID PAYMENT_TYPE    AMOUNT
+---------- ---------- ------------ ---------
+        41         22 ADVANCE           1000
+        43         22 REFUND             500
+
+2 rows selected.
+
+SQL> DELETE FROM booking WHERE booking_id = 22 AND status = 'CANCELLED';
+
+1 row deleted.
+
+SQL> SELECT COUNT(*) AS payments_left FROM payment WHERE booking_id = 22;
+
+PAYMENTS_LEFT
+-------------
+            0
+
+1 row selected.
+
+SQL> COMMIT;
+
+Commit complete.
+SQL>

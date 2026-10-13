@@ -312,8 +312,8 @@ class Report:
         if path:
             from PIL import Image
             w, h = Image.open(path).size
-            width = Cm(width_cm)
-            max_h = Cm(f.get('max_h', 12))
+            width = Cm(width_cm) if image else Cm(min(16.5, w * 0.0118))
+            max_h = Cm(f.get('max_h', 13.5))
             if width * h / w > max_h:
                 width = Emu(int(max_h * w / h))
             p = self.doc.add_paragraph()
@@ -398,7 +398,7 @@ def build_report(out_path):
              ['Milestone', 'Review II \u2013 Database Implementation'],
              ['Slot', 'L1 + L2'],
              ['Faculty', 'Dr. Ram Kumar T'],
-             ['Database', 'Oracle Database, SQL*Plus (Run SQL Command Line)']],
+             ['Database', 'Oracle AI Database 26ai Free (release 23.26), SQL*Plus']],
             [4.0, 9.8], size=10, first_col_color=DARK)
 
     R.h2('Contents')
@@ -465,6 +465,10 @@ def build_report(out_path):
              ['8', '11_transactions.sql', 'Runs the PL/SQL objects block by block, in order.',
               f"{BY_KEY['objects']['no']}\u2013{BY_KEY['rules']['no']}"]],
             [1.2, 4.3, 9.3, 2.2], size=8.5)
+    R.para('**About the screenshots.** All 42 screenshots in this report come from one run of these scripts, in this order, '
+           'on a fresh schema in Oracle AI Database 26ai Free using SQL*Plus (13-Oct-2026). Each image shows the commands as '
+           'echoed by SQL*Plus (SET ECHO ON) followed by the unedited output. Outputs that use SYSDATE (Q16, the overdue '
+           'report and the demo booking dates) depend on the day the scripts are run.', size=9.5)
     R.para('99_cleanup.sql drops every object so the whole sequence can be repeated on fresh data. '
            'Steps 5 and 6 must stay in this order because the DML demonstration changes rows that the queries read.',
            size=9.5)
@@ -547,12 +551,9 @@ def build_report(out_path):
     R.figure('data_vehicle')
     R.figure('data_booking')
     R.h2('2.2 INSERT, UPDATE and DELETE operations (06_dml_demo.sql)')
-    R.para('These statements are run after the queries of Section 3 because they change a few rows.')
-    R.code(dml['DML_INSERT'])
+    R.para('These statements are run after the queries of Section 3 because they change a few rows. Each screenshot shows the statements (with their comments) and the result.')
     R.figure('dml_insert')
-    R.code(dml['DML_UPDATE'])
     R.figure('dml_update')
-    R.code(dml['DML_DELETE'])
     R.figure('dml_delete')
     R.table(['Operation', 'Table', 'Effect'],
             [['INSERT', 'vehicle', 'Vehicle 15 (Kia Seltos) added at branch 2 with default transmission, odometer and status.'],
@@ -564,7 +565,7 @@ def build_report(out_path):
     # ---------------- section 3
     R.h1('3', 'SQL Queries')
     R.para('The queries answer questions that branch agents and the head office actually ask (FR-03, FR-11, FR-12 of '
-           'Review I). Each screenshot shows the query typed in SQL*Plus together with its output. Dates are displayed in '
+           'Review I). Each screenshot shows the query as echoed by SQL*Plus together with its output. Dates are displayed in '
            'the DD-MON-YY HH24:MI format set by 00_setup_display.sql.')
     qmeta = {
         'Q1': ('Which vehicles can be rented in Chennai from 21-Oct 10:00 to 23-Oct 10:00? (FR-03)',
@@ -609,7 +610,6 @@ def build_report(out_path):
         k = f'Q{i}'
         title, concepts, note = qmeta[k]
         R.h3(f'{k}. {title}', sub=f'**Concepts:** {concepts}')
-        R.code(qs[k])
         R.figure(f'q{i}', note=note)
 
     # ---------------- section 4

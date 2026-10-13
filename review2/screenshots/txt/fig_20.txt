@@ -1,0 +1,11 @@
+SQL> SELECT customer_id, name, phone FROM customer
+  2  MINUS
+  3  SELECT c.customer_id, c.name, c.phone
+  4  FROM   customer c JOIN booking bk ON bk.customer_id = c.customer_id;
+
+CUSTOMER_ID NAME               PHONE
+----------- ------------------ ----------
+         12 Karthik Sundar     9841000112
+
+1 row selected.
+SQL>
