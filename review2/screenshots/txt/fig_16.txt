@@ -1,0 +1,25 @@
+SQL> SELECT br.branch_name,
+  2         COUNT(DISTINCT bk.booking_id) AS bookings,
+  3         SUM(CASE WHEN p.payment_type = 'REFUND' THEN -p.amount ELSE p.amount END) AS net_revenue
+  4  FROM   payment p
+  5  JOIN   booking bk ON bk.booking_id = p.booking_id
+  6  JOIN   branch  br ON br.branch_id  = bk.pickup_branch_id
+  7  WHERE  p.txn_status = 'SUCCESS'
+  8  GROUP  BY br.branch_name
+  9  ORDER  BY net_revenue DESC;
+
+BRANCH_NAME                      BOOKINGS NET_REVENUE
+------------------------------- --------- -----------
+DriveEase Kochi Edappally               1       16500
+DriveEase Chennai Central               5       15400
+DriveEase Hyderabad Hitech City         2       14100
+DriveEase Chennai Airport               2       13700
+DriveEase Bengaluru MG Road             4       13400
+DriveEase Pune Shivajinagar             1       12000
+DriveEase Bengaluru Whitefield          2       11250
+DriveEase Vellore Katpadi               1       10500
+DriveEase Coimbatore                    2        4900
+DriveEase Secunderabad                  1        1500
+
+10 rows selected.
+SQL>

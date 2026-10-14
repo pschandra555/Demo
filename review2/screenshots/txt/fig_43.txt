@@ -1,0 +1,57 @@
+SQL> -- 1. BR-02: vehicle 1 already has booking 19 from 20-Oct to 22-Oct
+SQL> BEGIN
+  2    sp_create_booking(10, 1, 2, 1, 1,
+  3                      TO_DATE('2026-10-21 10:00', 'YYYY-MM-DD HH24:MI'), TO_DATE('2026-10-23 10:00', 'YYYY-MM-DD HH24:MI'), 500, 'UPI');
+  4    DBMS_OUTPUT.PUT_LINE('Accepted - rule NOT working');
+  5  EXCEPTION WHEN OTHERS THEN DBMS_OUTPUT.PUT_LINE('Rejected: ' || REGEXP_SUBSTR(SQLERRM, '[^' || CHR(10) || ']+'));
+  6  END;
+  7  /
+Rejected: ORA-20103: Vehicle 1 is already booked for these dates
+
+PL/SQL procedure successfully completed.
+
+SQL> -- 2. Vehicle 10 is at the Pune branch, not at Chennai Central
+SQL> BEGIN
+  2    sp_create_booking(10, 10, 2, 1, 1,
+  3                      TO_DATE('2026-11-02 10:00', 'YYYY-MM-DD HH24:MI'), TO_DATE('2026-11-03 10:00', 'YYYY-MM-DD HH24:MI'), 0);
+  4    DBMS_OUTPUT.PUT_LINE('Accepted - rule NOT working');
+  5  EXCEPTION WHEN OTHERS THEN DBMS_OUTPUT.PUT_LINE('Rejected: ' || REGEXP_SUBSTR(SQLERRM, '[^' || CHR(10) || ']+'));
+  6  END;
+  7  /
+Rejected: ORA-20102: Vehicle 10 is at branch 9, not at pickup branch 1
+
+PL/SQL procedure successfully completed.
+
+SQL> -- 3. Booking 23 is already COMPLETED, so it cannot be picked up again
+SQL> BEGIN
+  2    sp_pickup_vehicle(23);
+  3    DBMS_OUTPUT.PUT_LINE('Accepted - rule NOT working');
+  4  EXCEPTION WHEN OTHERS THEN DBMS_OUTPUT.PUT_LINE('Rejected: ' || REGEXP_SUBSTR(SQLERRM, '[^' || CHR(10) || ']+'));
+  5  END;
+  6  /
+Rejected: ORA-20120: Booking 23 is COMPLETED, not BOOKED
+
+PL/SQL procedure successfully completed.
+
+SQL> -- 4. Booking 18 is ONGOING, so it cannot be cancelled
+SQL> BEGIN
+  2    sp_cancel_booking(18);
+  3    DBMS_OUTPUT.PUT_LINE('Accepted - rule NOT working');
+  4  EXCEPTION WHEN OTHERS THEN DBMS_OUTPUT.PUT_LINE('Rejected: ' || REGEXP_SUBSTR(SQLERRM, '[^' || CHR(10) || ']+'));
+  5  END;
+  6  /
+Rejected: ORA-20140: Only a BOOKED booking can be cancelled. Current status: ONGOING
+
+PL/SQL procedure successfully completed.
+
+SQL> -- 5. Phone number already belongs to customer 1
+SQL> BEGIN
+  2    sp_register_customer('Aditya R', '9841000101', NULL, 'TN0920259999999', DATE '2036-01-01', DATE '1996-03-14');
+  3    DBMS_OUTPUT.PUT_LINE('Accepted - rule NOT working');
+  4  EXCEPTION WHEN OTHERS THEN DBMS_OUTPUT.PUT_LINE('Rejected: ' || REGEXP_SUBSTR(SQLERRM, '[^' || CHR(10) || ']+'));
+  5  END;
+  6  /
+Rejected: ORA-20150: Phone, email or licence number is already registered
+
+PL/SQL procedure successfully completed.
+SQL>

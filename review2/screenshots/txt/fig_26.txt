@@ -1,0 +1,22 @@
+SQL> SELECT v.reg_number, v.brand || ' ' || v.model AS vehicle,
+  2         COUNT(m.maint_id)  AS jobs,
+  3         NVL(SUM(m.cost), 0) AS total_cost
+  4  FROM   vehicle v
+  5  LEFT JOIN maintenance m ON m.vehicle_id = v.vehicle_id
+  6  GROUP  BY v.reg_number, v.brand, v.model
+  7  HAVING NVL(SUM(m.cost), 0) > 5000
+  8  ORDER  BY total_cost DESC;
+
+REG_NUMBER VEHICLE                         JOBS TOTAL_COST
+---------- -------------------------- --------- ----------
+MH12ST9010 Mercedes-Benz E-Class              1      42000
+TN23QR8009 Mahindra XUV700                    1      18500
+TS10LM6007 Hyundai i20                        1      14400
+KA03GH4005 Tata Nexon EV                      1      12500
+TN37NP7008 Maruti Suzuki Dzire                1       9500
+TN09AB1002 Hyundai Creta                      1       8200
+KA01EF3004 Honda City                         1       6800
+TS09JK5006 Toyota Fortuner                    1       5200
+
+8 rows selected.
+SQL>

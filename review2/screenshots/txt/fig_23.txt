@@ -1,0 +1,23 @@
+SQL> SELECT bk.booking_id, c.name AS customer, bk.end_date, bk.actual_return_date,
+  2         CEIL(ROUND((bk.actual_return_date - bk.end_date) * 1440) / 60) AS hours_late,
+  3         vc.late_fee_per_hr,
+  4         NVL(SUM(p.amount), 0) AS fee_billed
+  5  FROM   booking bk
+  6  JOIN   customer c          ON c.customer_id  = bk.customer_id
+  7  JOIN   vehicle v           ON v.vehicle_id   = bk.vehicle_id
+  8  JOIN   vehicle_category vc ON vc.category_id = v.category_id
+  9  LEFT JOIN payment p        ON p.booking_id   = bk.booking_id AND p.payment_type = 'LATE_FEE'
+ 10  WHERE  bk.actual_return_date > bk.end_date
+ 11  GROUP  BY bk.booking_id, c.name, bk.end_date, bk.actual_return_date, vc.late_fee_per_hr
+ 12  ORDER  BY bk.booking_id;
+
+BOOKING_ID CUSTOMER         END_DATE        ACTUAL_RETURN_DATE HOURS_LATE LATE_FEE_PER_HR FEE_BILLED
+---------- ---------------- --------------- ------------------ ---------- --------------- ----------
+         2 Meera Krishnan   08-AUG-26 10:00 08-AUG-26 14:00             4             250       1000
+         4 Sneha Pillai     17-AUG-26 09:00 17-AUG-26 09:40             1             250        250
+         7 Harish Kumar     05-SEP-26 07:00 05-SEP-26 10:00             3             300        900
+        12 Farhan Ali       21-SEP-26 10:00 21-SEP-26 13:00             3             300        900
+        16 Sneha Pillai     04-OCT-26 10:00 04-OCT-26 12:00             2             300        600
+
+5 rows selected.
+SQL>

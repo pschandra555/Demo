@@ -1,0 +1,23 @@
+SQL> SELECT customer_id, name, dob, fn_age(dob, SYSDATE) AS age_today
+  2  FROM   customer WHERE customer_id IN (4, 8, 9);
+
+CUSTOMER_ID NAME               DOB             AGE_TODAY
+----------- ------------------ --------------- ---------
+          4 Sneha Pillai       18-JAN-01 00:00        25
+          8 Divya Nair         25-JUN-02 00:00        24
+          9 Sanjay Kulkarni    11-FEB-79 00:00        47
+
+3 rows selected.
+
+SQL> SELECT fn_is_vehicle_free(1,  TO_DATE('2026-10-21 10:00', 'YYYY-MM-DD HH24:MI'),
+  2                                TO_DATE('2026-10-23 10:00', 'YYYY-MM-DD HH24:MI')) AS vehicle1_free,
+  3         fn_is_vehicle_free(12, TO_DATE('2026-10-21 10:00', 'YYYY-MM-DD HH24:MI'),
+  4                                TO_DATE('2026-10-23 10:00', 'YYYY-MM-DD HH24:MI')) AS vehicle12_free
+  5  FROM   dual;
+
+VEHICLE1_FREE VEHICLE12_FREE
+------------- --------------
+            0              1
+
+1 row selected.
+SQL>

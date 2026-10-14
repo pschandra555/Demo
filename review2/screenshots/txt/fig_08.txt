@@ -1,0 +1,22 @@
+SQL> SELECT 'BRANCH' AS table_name, COUNT(*) AS total_rows FROM branch
+  2  UNION ALL SELECT 'VEHICLE_CATEGORY', COUNT(*) FROM vehicle_category
+  3  UNION ALL SELECT 'VEHICLE',          COUNT(*) FROM vehicle
+  4  UNION ALL SELECT 'CUSTOMER',         COUNT(*) FROM customer
+  5  UNION ALL SELECT 'EMPLOYEE',         COUNT(*) FROM employee
+  6  UNION ALL SELECT 'BOOKING',          COUNT(*) FROM booking
+  7  UNION ALL SELECT 'PAYMENT',          COUNT(*) FROM payment
+  8  UNION ALL SELECT 'MAINTENANCE',      COUNT(*) FROM maintenance;
+
+TABLE_NAME       TOTAL_ROWS
+---------------- ----------
+BRANCH                   10
+VEHICLE_CATEGORY         10
+VEHICLE                  14
+CUSTOMER                 12
+EMPLOYEE                 15
+BOOKING                  22
+PAYMENT                  45
+MAINTENANCE              12
+
+8 rows selected.
+SQL>

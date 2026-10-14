@@ -1,0 +1,7 @@
+SQL> EXEC sp_pending_dues;
+Booking 12 | Farhan Ali (9841000110) | balance Rs 900
+Booking 16 | Sneha Pillai (9841000104) | balance Rs 4000
+2 booking(s) with pending dues. Total: Rs 4900
+
+PL/SQL procedure successfully completed.
+SQL>

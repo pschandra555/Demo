@@ -1,0 +1,19 @@
+SQL> SELECT TO_CHAR(payment_date, 'YYYY-MM') AS month,
+  2         SUM(CASE WHEN payment_type = 'ADVANCE'  THEN amount ELSE 0 END) AS advance,
+  3         SUM(CASE WHEN payment_type = 'FINAL'    THEN amount ELSE 0 END) AS final,
+  4         SUM(CASE WHEN payment_type = 'LATE_FEE' THEN amount ELSE 0 END) AS late_fee,
+  5         SUM(CASE WHEN payment_type = 'REFUND'   THEN amount ELSE 0 END) AS refund
+  6  FROM   payment
+  7  WHERE  txn_status = 'SUCCESS'
+  8  GROUP  BY TO_CHAR(payment_date, 'YYYY-MM')
+  9  ORDER  BY month;
+
+MONTH     ADVANCE     FINAL  LATE_FEE    REFUND
+------- --------- --------- --------- ---------
+2026-07      1000         0         0         0
+2026-08     14500     26300      1250         0
+2026-09     20100     40700       900         0
+2026-10      7000      3400       600      2500
+
+4 rows selected.
+SQL>

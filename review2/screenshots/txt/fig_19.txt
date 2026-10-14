@@ -1,0 +1,25 @@
+SQL> SELECT c.customer_id, c.name, SUM(p.amount) AS total_paid
+  2  FROM   customer c
+  3  JOIN   booking bk ON bk.customer_id = c.customer_id
+  4  JOIN   payment p  ON p.booking_id   = bk.booking_id
+  5  WHERE  p.txn_status = 'SUCCESS' AND p.payment_type <> 'REFUND'
+  6  GROUP  BY c.customer_id, c.name
+  7  HAVING SUM(p.amount) > (SELECT AVG(t.spent)
+  8                          FROM  (SELECT SUM(p2.amount) AS spent
+  9                                 FROM   payment p2
+ 10                                 JOIN   booking b2 ON b2.booking_id = p2.booking_id
+ 11                                 WHERE  p2.txn_status = 'SUCCESS' AND p2.payment_type <> 'REFUND'
+ 12                                 GROUP  BY b2.customer_id) t)
+ 13  ORDER  BY total_paid DESC;
+
+CUSTOMER_ID NAME               TOTAL_PAID
+----------- ------------------ ----------
+         11 Anjali Thomas           17500
+          5 Vikram Reddy            14900
+          7 Harish Kumar            13700
+          9 Sanjay Kulkarni         13000
+          4 Sneha Pillai            12850
+          2 Meera Krishnan          11000
+
+6 rows selected.
+SQL>

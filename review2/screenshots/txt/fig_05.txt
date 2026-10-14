@@ -1,0 +1,21 @@
+SQL> SELECT c.table_name, c.constraint_name, r.table_name AS refers_to, c.delete_rule
+  2  FROM   user_constraints c
+  3  JOIN   user_constraints r ON r.constraint_name = c.r_constraint_name
+  4  WHERE  c.constraint_type = 'R'
+  5  ORDER  BY c.table_name, c.constraint_name;
+
+TABLE_NAME       CONSTRAINT_NAME        REFERS_TO         DELETE_RULE
+---------------- ---------------------- ----------------- -----------
+BOOKING          FK_BOOKING_CUSTOMER    CUSTOMER          NO ACTION
+BOOKING          FK_BOOKING_EMPLOYEE    EMPLOYEE          NO ACTION
+BOOKING          FK_BOOKING_PICKUP      BRANCH            NO ACTION
+BOOKING          FK_BOOKING_RETURN      BRANCH            NO ACTION
+BOOKING          FK_BOOKING_VEHICLE     VEHICLE           NO ACTION
+EMPLOYEE         FK_EMPLOYEE_BRANCH     BRANCH            NO ACTION
+MAINTENANCE      FK_MAINTENANCE_VEHICLE VEHICLE           NO ACTION
+PAYMENT          FK_PAYMENT_BOOKING     BOOKING           CASCADE
+VEHICLE          FK_VEHICLE_BRANCH      BRANCH            NO ACTION
+VEHICLE          FK_VEHICLE_CATEGORY    VEHICLE_CATEGORY  NO ACTION
+
+10 rows selected.
+SQL>

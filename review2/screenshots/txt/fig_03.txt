@@ -1,0 +1,28 @@
+SQL> DESC booking
+ Name                                                                                Null?    Type
+ ----------------------------------------------------------------------------------- -------- --------------------------------------------------------
+ BOOKING_ID                                                                          NOT NULL NUMBER(7)
+ CUSTOMER_ID                                                                         NOT NULL NUMBER(6)
+ VEHICLE_ID                                                                          NOT NULL NUMBER(5)
+ EMP_ID                                                                              NOT NULL NUMBER(5)
+ PICKUP_BRANCH_ID                                                                    NOT NULL NUMBER(4)
+ RETURN_BRANCH_ID                                                                    NOT NULL NUMBER(4)
+ BOOKING_DATE                                                                                 DATE
+ START_DATE                                                                          NOT NULL DATE
+ END_DATE                                                                            NOT NULL DATE
+ ACTUAL_RETURN_DATE                                                                           DATE
+ START_ODOMETER                                                                               NUMBER(7)
+ END_ODOMETER                                                                                 NUMBER(7)
+ STATUS                                                                                       VARCHAR2(12)
+
+SQL> DESC payment
+ Name                                                                                Null?    Type
+ ----------------------------------------------------------------------------------- -------- --------------------------------------------------------
+ PAYMENT_ID                                                                          NOT NULL NUMBER(8)
+ BOOKING_ID                                                                          NOT NULL NUMBER(7)
+ AMOUNT                                                                              NOT NULL NUMBER(9,2)
+ PAYMENT_DATE                                                                                 DATE
+ METHOD                                                                              NOT NULL VARCHAR2(12)
+ PAYMENT_TYPE                                                                        NOT NULL VARCHAR2(10)
+ TXN_STATUS                                                                                   VARCHAR2(10)
+SQL>

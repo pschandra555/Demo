@@ -1,0 +1,23 @@
+SQL> -- Customer 13 books the scooter (vehicle 12) at Chennai Central for 2 days from tomorrow 10:00,
+SQL> -- returning it at Chennai Airport (one-way), and pays Rs 400 advance by UPI.
+SQL> EXEC sp_create_booking(13, 12, 2, 1, 2, TRUNC(SYSDATE) + 1 + 10/24, TRUNC(SYSDATE) + 3 + 10/24, 400, 'UPI');
+Booking 23 created for vehicle 12. Estimated rent: Rs 1000, advance paid: Rs 400
+
+PL/SQL procedure successfully completed.
+
+SQL> SELECT booking_id, customer_id, vehicle_id, start_date, end_date, status FROM booking WHERE booking_id = 23;
+
+BOOKING_ID CUSTOMER_ID VEHICLE_ID START_DATE      END_DATE        STATUS
+---------- ----------- ---------- --------------- --------------- -----------
+        23          13         12 14-OCT-26 10:00 16-OCT-26 10:00 BOOKED
+
+1 row selected.
+
+SQL> SELECT payment_id, booking_id, amount, method, payment_type FROM payment WHERE booking_id = 23;
+
+PAYMENT_ID BOOKING_ID    AMOUNT METHOD     PAYMENT_TYPE
+---------- ---------- --------- ---------- ------------
+        46         23       400 UPI        ADVANCE
+
+1 row selected.
+SQL>

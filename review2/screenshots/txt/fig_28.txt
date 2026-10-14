@@ -1,0 +1,21 @@
+SQL> SELECT e.emp_id, e.name AS employee, br.branch_name, COUNT(bk.booking_id) AS bookings_handled
+  2  FROM   employee e
+  3  JOIN   branch br ON br.branch_id = e.branch_id
+  4  LEFT JOIN booking bk ON bk.emp_id = e.emp_id
+  5  WHERE  e.role = 'AGENT'
+  6  GROUP  BY e.emp_id, e.name, br.branch_name
+  7  HAVING COUNT(bk.booking_id) >= 2
+  8  ORDER  BY bookings_handled DESC, e.emp_id;
+
+   EMP_ID EMPLOYEE             BRANCH_NAME                     BOOKINGS_HANDLED
+--------- -------------------- ------------------------------- ----------------
+        2 Divya Menon          DriveEase Chennai Central                      5
+        5 Pooja Rao            DriveEase Bengaluru MG Road                    4
+        3 Karthik Subramanian  DriveEase Chennai Airport                      2
+        6 Anitha Kumar         DriveEase Bengaluru Whitefield                 2
+        7 Lakshmi Reddy        DriveEase Hyderabad Hitech City                2
+        9 Murali Krishnan      DriveEase Coimbatore                           2
+       11 Arjun Patil          DriveEase Pune Shivajinagar                    2
+
+7 rows selected.
+SQL>

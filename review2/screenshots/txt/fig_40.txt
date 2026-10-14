@@ -1,0 +1,21 @@
+SQL> -- Both registrations must be rejected by trg_customer_validate
+SQL> BEGIN
+  2    sp_register_customer('Arav Shah', '9000000001', NULL, 'TN0920250000001', DATE '2035-01-01', DATE '2010-01-01');
+  3    DBMS_OUTPUT.PUT_LINE('Accepted - rule NOT working');
+  4  EXCEPTION WHEN OTHERS THEN DBMS_OUTPUT.PUT_LINE('Rejected: ' || REGEXP_SUBSTR(SQLERRM, '[^' || CHR(10) || ']+'));
+  5  END;
+  6  /
+Rejected: ORA-20201: Customer must be at least 21 years old. Age: 16
+
+PL/SQL procedure successfully completed.
+
+SQL> BEGIN
+  2    sp_register_customer('Nikhil Das', '9000000002', NULL, 'TN0920000000002', DATE '2025-01-01', DATE '1990-01-01');
+  3    DBMS_OUTPUT.PUT_LINE('Accepted - rule NOT working');
+  4  EXCEPTION WHEN OTHERS THEN DBMS_OUTPUT.PUT_LINE('Rejected: ' || REGEXP_SUBSTR(SQLERRM, '[^' || CHR(10) || ']+'));
+  5  END;
+  6  /
+Rejected: ORA-20202: Driving licence has expired on 01-JAN-2025
+
+PL/SQL procedure successfully completed.
+SQL>

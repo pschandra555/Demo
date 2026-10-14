@@ -1,0 +1,13 @@
+SQL> EXEC sp_register_customer('Rohit Verma', '9841000113', 'rohit.verma@gmail.com', 'TN0920200045678', DATE '2032-06-30', DATE '1998-09-12', 'Velachery, Chennai');
+Customer registered. ID = 13
+
+PL/SQL procedure successfully completed.
+
+SQL> SELECT customer_id, name, phone, license_no, registered_on FROM customer WHERE customer_id = 13;
+
+CUSTOMER_ID NAME               PHONE      LICENSE_NO      REGISTERED_ON
+----------- ------------------ ---------- --------------- ---------------
+         13 Rohit Verma        9841000113 TN0920200045678 13-OCT-26 18:23
+
+1 row selected.
+SQL>

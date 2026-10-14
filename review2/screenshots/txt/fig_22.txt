@@ -1,0 +1,18 @@
+SQL> SELECT bk.booking_id, c.name AS customer, v.reg_number,
+  2         pb.branch_name AS pickup_branch, rb.branch_name AS return_branch, bk.status
+  3  FROM   booking bk
+  4  JOIN   customer c ON c.customer_id = bk.customer_id
+  5  JOIN   vehicle  v ON v.vehicle_id  = bk.vehicle_id
+  6  JOIN   branch  pb ON pb.branch_id  = bk.pickup_branch_id
+  7  JOIN   branch  rb ON rb.branch_id  = bk.return_branch_id
+  8  WHERE  bk.pickup_branch_id <> bk.return_branch_id
+  9  ORDER  BY bk.booking_id;
+
+BOOKING_ID CUSTOMER         REG_NUMBER PICKUP_BRANCH                   RETURN_BRANCH                   STATUS
+---------- ---------------- ---------- ------------------------------- ------------------------------- -----------
+         2 Meera Krishnan   TN09AB1002 DriveEase Chennai Central       DriveEase Bengaluru MG Road     COMPLETED
+        15 Vikram Reddy     KA01EF3004 DriveEase Bengaluru MG Road     DriveEase Chennai Central       COMPLETED
+        16 Sneha Pillai     TS09JK5006 DriveEase Hyderabad Hitech City DriveEase Secunderabad          COMPLETED
+
+3 rows selected.
+SQL>

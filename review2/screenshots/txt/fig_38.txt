@@ -1,0 +1,6 @@
+SQL> EXEC sp_overdue_report;
+Booking 17 | KA03GH4005 | Kavya Iyer (9841000106) | due 10-Oct 09:00 | 82 h late | fee so far Rs 20500
+1 overdue booking(s). Total late fee so far: Rs 20500
+
+PL/SQL procedure successfully completed.
+SQL>

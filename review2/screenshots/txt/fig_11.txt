@@ -1,0 +1,20 @@
+SQL> -- A new Kia Seltos joins the Chennai Airport branch. transmission, odometer and status
+SQL> -- are not given, so the DEFAULT values ('MANUAL', 0, 'AVAILABLE') are stored.
+SQL> INSERT INTO vehicle (vehicle_id, reg_number, brand, model, mfg_year, fuel_type, category_id, branch_id)
+  2  VALUES (15, 'TN09YZ2015', 'Kia', 'Seltos', 2024, 'PETROL', 3, 2);
+
+1 row created.
+
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> SELECT vehicle_id, reg_number, brand, model, transmission, odometer, status, branch_id
+  2  FROM   vehicle WHERE vehicle_id = 15;
+
+VEHICLE_ID REG_NUMBER BRAND         MODEL         TRANSMISSION  ODOMETER STATUS      BRANCH_ID
+---------- ---------- ------------- ------------- ------------ --------- ----------- ---------
+        15 TN09YZ2015 Kia           Seltos        MANUAL               0 AVAILABLE           2
+
+1 row selected.
+SQL>

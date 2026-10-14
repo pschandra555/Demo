@@ -1,0 +1,19 @@
+SQL> SELECT v.reg_number, v.brand || ' ' || v.model AS vehicle, 'RENTED' AS state,
+  2         'With ' || c.name || ', due ' || TO_CHAR(bk.end_date, 'DD-Mon HH24:MI') AS details
+  3  FROM   vehicle v
+  4  JOIN   booking  bk ON bk.vehicle_id = v.vehicle_id AND bk.status = 'ONGOING'
+  5  JOIN   customer c  ON c.customer_id = bk.customer_id
+  6  UNION ALL
+  7  SELECT v.reg_number, v.brand || ' ' || v.model, 'MAINTENANCE',
+  8         m.service_type || ': ' || m.description
+  9  FROM   vehicle v
+ 10  JOIN   maintenance m ON m.vehicle_id = v.vehicle_id AND m.maint_status = 'IN_PROGRESS';
+
+REG_NUMBER VEHICLE                    STATE       DETAILS
+---------- -------------------------- ----------- ------------------------------------------------
+KA03GH4005 Tata Nexon EV              RENTED      With Kavya Iyer, due 10-Oct 09:00
+TN09AB1002 Hyundai Creta              RENTED      With Divya Nair, due 15-Oct 10:00
+TN37NP7008 Maruti Suzuki Dzire        MAINTENANCE REPAIR: Clutch plate replacement
+
+3 rows selected.
+SQL>

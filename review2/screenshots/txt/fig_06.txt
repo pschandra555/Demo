@@ -1,0 +1,47 @@
+SQL> -- 1. UNIQUE: this registration number already belongs to vehicle 1
+SQL> BEGIN
+  2    INSERT INTO vehicle (vehicle_id, reg_number, brand, model, fuel_type, category_id, branch_id)
+  3    VALUES (50, 'TN09AB1001', 'Maruti Suzuki', 'Baleno', 'PETROL', 1, 1);
+  4    DBMS_OUTPUT.PUT_LINE('Accepted - constraint NOT working');
+  5  EXCEPTION WHEN OTHERS THEN DBMS_OUTPUT.PUT_LINE('Rejected: ' || REGEXP_SUBSTR(SQLERRM, '[^' || CHR(10) || ']+'));
+  6  END;
+  7  /
+Rejected: ORA-00001: unique constraint (RENTAL.UQ_VEHICLE_REG) violated on table RENTAL.VEHICLE columns (REG_NUMBER)
+
+PL/SQL procedure successfully completed.
+
+SQL> -- 2. CHECK: HYBRID is not one of the allowed fuel types
+SQL> BEGIN
+  2    INSERT INTO vehicle (vehicle_id, reg_number, brand, model, fuel_type, category_id, branch_id)
+  3    VALUES (51, 'TN09ZZ9999', 'Toyota', 'Hyryder', 'HYBRID', 3, 1);
+  4    DBMS_OUTPUT.PUT_LINE('Accepted - constraint NOT working');
+  5  EXCEPTION WHEN OTHERS THEN DBMS_OUTPUT.PUT_LINE('Rejected: ' || REGEXP_SUBSTR(SQLERRM, '[^' || CHR(10) || ']+'));
+  6  END;
+  7  /
+Rejected: ORA-02290: check constraint (RENTAL.CK_VEHICLE_FUEL) violated
+
+PL/SQL procedure successfully completed.
+
+SQL> -- 3. CHECK: branch phone must have exactly 10 digits
+SQL> BEGIN
+  2    INSERT INTO branch VALUES (50, 'DriveEase Test', 'Chennai', 'Test address', '98401', NULL);
+  3    DBMS_OUTPUT.PUT_LINE('Accepted - constraint NOT working');
+  4  EXCEPTION WHEN OTHERS THEN DBMS_OUTPUT.PUT_LINE('Rejected: ' || REGEXP_SUBSTR(SQLERRM, '[^' || CHR(10) || ']+'));
+  5  END;
+  6  /
+Rejected: ORA-02290: check constraint (RENTAL.CK_BRANCH_PHONE) violated
+
+PL/SQL procedure successfully completed.
+
+SQL> -- 4. NOT NULL: licence number is missing
+SQL> BEGIN
+  2    INSERT INTO customer (customer_id, name, phone, license_expiry, dob)
+  3    VALUES (50, 'Test User', '9000000050', DATE '2035-01-01', DATE '1995-01-01');
+  4    DBMS_OUTPUT.PUT_LINE('Accepted - constraint NOT working');
+  5  EXCEPTION WHEN OTHERS THEN DBMS_OUTPUT.PUT_LINE('Rejected: ' || REGEXP_SUBSTR(SQLERRM, '[^' || CHR(10) || ']+'));
+  6  END;
+  7  /
+Rejected: ORA-01400: cannot insert NULL into ("RENTAL"."CUSTOMER"."LICENSE_NO")
+
+PL/SQL procedure successfully completed.
+SQL>
